@@ -1,6 +1,12 @@
 # dsh-hduhelp-ai
 
+[![npm version](https://img.shields.io/npm/v/dsh-hduhelp-ai.svg)](https://www.npmjs.com/package/dsh-hduhelp-ai)
+[![license](https://img.shields.io/npm/l/dsh-hduhelp-ai.svg)](./LICENSE)
+[![gh](https://img.shields.io/badge/github-AlaIchhe%2Fdsh--hduhelp--ai-181717?logo=github)](https://github.com/AlaIchhe/dsh-hduhelp-ai)
+
 把 **杭电助手（HDUHelp）的 AI 网关**接进 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)，在 DSH 里直接当模型用。
+
+已发布到 npm：[`dsh-hduhelp-ai`](https://www.npmjs.com/package/dsh-hduhelp-ai)
 
 - **面板登录**：设置 → 杭电助手 AI，填学号 + 统一身份认证密码；纯 HTTP 走杭电 CAS（crypto 加密表单，不需要浏览器，<1s）
 - **模型注册**：登录后 `杭电助手` 作为 provider 出现；上游目录 77 个模型，**只注册你勾选的那几个**，选择器不臃肿
