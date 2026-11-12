@@ -13,10 +13,15 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org
+
+      # Trusted Publishing (OIDC) needs npm >= 11.5.2
+      - name: Ensure modern npm
+        run: npm install -g npm@^11
 
       - name: Check whether this version is already published
         id: check
@@ -30,8 +35,17 @@ jobs:
             echo "published=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Publish
+      # Preferred: no long-lived secret, GitHub OIDC is exchanged for a
+      # short-lived npm credential by the registry (Trusted Publisher).
+      - name: Publish (trusted publishing / OIDC)
+        id: oidc
         if: steps.check.outputs.published == 'false'
+        continue-on-error: true
+        run: npm publish --access public --provenance
+
+      # Fallback while the Trusted Publisher binding is not configured yet.
+      - name: Publish (token fallback)
+        if: steps.check.outputs.published == 'false' && steps.oidc.outcome == 'failure'
         run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
