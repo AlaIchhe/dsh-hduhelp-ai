@@ -8,6 +8,12 @@
 - **额度显示**：输入框工具行、权限按钮右边显示 5h / 7d 两个窗口的用量，429 时显示恢复倒计时
 - **OpenAI 兼容反代**：额外提供 `http://<host>:8787/v1`，给 Cherry Studio / LobeChat / SDK 用
 
+![设置面板](docs/screenshot.png)
+
+输入框工具行、「完全权限」右侧的额度胶囊：
+
+![额度胶囊](docs/screenshot-quota.png)
+
 > 接口从 **杭电助手 Beta 0.5.8** 的 Flutter/Dart AOT 包里逆向得到，仅用于个人接入自己账号的模型额度。
 
 ## 安装
