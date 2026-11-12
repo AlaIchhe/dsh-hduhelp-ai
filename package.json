@@ -1,0 +1,61 @@
+{
+  "name": "dsh-hduhelp-ai",
+  "version": "0.1.0",
+  "description": "杭电助手（HDUHelp）AI 网关接入 DeepSeek Harness：面板里用学号密码走 CAS 登录，模型注册进 DSH 模型列表，另提供 OpenAI 兼容反代。",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.2-rc.1 <0.3.0-0"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "dsh-plugin",
+    "hduhelp",
+    "杭电助手",
+    "llm-provider",
+    "llm-adapter",
+    "openai",
+    "reverse-proxy",
+    "cas"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    },
+    "compatibility": {
+      "dshReleases": {
+        "0.2.2-rc.1": "compatible"
+      }
+    }
+  },
+  "author": "AlaIchhe",
+  "homepage": "https://github.com/AlaIchhe/dsh-hduhelp-ai#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlaIchhe/dsh-hduhelp-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlaIchhe/dsh-hduhelp-ai/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
