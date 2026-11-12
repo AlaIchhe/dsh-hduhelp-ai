@@ -5,10 +5,6 @@
 <h1 align="center">dsh-hduhelp-ai</h1>
 
 <p align="center">
-  把杭电助手的 AI 网关接进 DeepSeek Harness。面板里用学号密码登录，选几个模型，剩下的交给 agent。
-</p>
-
-<p align="center">
   <a href="https://www.npmjs.com/package/dsh-hduhelp-ai">
     <img src="https://img.shields.io/badge/npm-dsh--hduhelp--ai-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm">
   </a>
@@ -22,7 +18,7 @@
 </p>
 
 <p align="center">
-  <sub>一条命令装进 DSH：<code>dsh plugin --profile web add dsh-hduhelp-ai</code></sub>
+  <sub><code>dsh plugin --profile web add dsh-hduhelp-ai</code></sub>
 </p>
 
 ---
@@ -37,17 +33,17 @@
   <tr>
     <td width="50%" valign="top">
       <strong>面板登录</strong><br>
-      设置里填学号和统一身份认证密码，走杭电 CAS 换 token，纯 HTTP 不需要浏览器，通常不到 1 秒。
+      设置里填学号和统一身份认证密码，走杭电 CAS 换 token。
     </td>
     <td width="50%" valign="top">
       <strong>只注册你选的模型</strong><br>
-      上游目录有 77 个模型，插件只把勾选的那几个注册进 DSH 模型列表，选择器保持干净。
+      上游目录有 77 个模型，插件只把勾选的那几个注册进 DSH 模型列表。
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <strong>原生多轮工具调用</strong><br>
-      走 Responses 协议的 <code>function_call</code> / <code>function_call_output</code>，思考—调用—观察的 ReAct 循环不降级。
+      走 Responses 协议的 <code>function_call</code> / <code>function_call_output</code>
     </td>
     <td width="50%" valign="top">
       <strong>额度就在手边</strong><br>
