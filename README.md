@@ -161,7 +161,3 @@ rm -rf ~/.dsh/hduhelp-ai
   <a href="LICENSE">License</a> ·
   <a href="https://www.npmjs.com/package/dsh-hduhelp-ai">npm</a>
 </p>
-
-<p align="center">
-  <sub>把学校的 AI 额度，接到自己的 agent 上。<br>省下来的时间，拿去写点更有意思的东西。</sub>
-</p>
