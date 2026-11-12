@@ -17,7 +17,7 @@
 <p align="center">
   <a href="https://github.com/AlaIchhe/dsh-hduhelp-ai/releases/latest"><img src="https://img.shields.io/github/v/release/AlaIchhe/dsh-hduhelp-ai?label=release&style=flat-square" alt="Release"></a>
   <a href="https://www.npmjs.com/package/dsh-hduhelp-ai"><img src="https://img.shields.io/npm/v/dsh-hduhelp-ai?style=flat-square" alt="npm"></a>
-  <a href="https://github.com/AlaIchhe/dsh-hduhelp-ai/actions"><img src="https://img.shields.io/github/actions/workflow/status/AlaIchhe/dsh-hduhelp-ai/publish.yml?label=CI&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/AlaIchhe/dsh-hduhelp-ai/actions"><img src="https://img.shields.io/github/actions/workflow/status/AlaIchhe/dsh-hduhelp-ai/publish.yml?branch=master&label=CI&style=flat-square" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/AlaIchhe/dsh-hduhelp-ai?style=flat-square" alt="License"></a>
 </p>
 
