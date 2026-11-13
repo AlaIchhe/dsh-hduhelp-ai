@@ -23,10 +23,6 @@
 
 ---
 
-<p align="center">
-  <img src="docs/screenshot.png" width="720" alt="设置面板">
-</p>
-
 ## 能做什么
 
 <table>
@@ -56,8 +52,8 @@
       输入框工具行、权限按钮右侧显示 5 小时 / 7 天两个窗口的用量；额度用尽时显示恢复倒计时。
     </td>
     <td width="50%" valign="top">
-      <strong>OpenAI 兼容反代</strong><br>
-      额外提供 <code>http://&lt;host&gt;:8787/v1</code>，chat/completions 自动翻译成 Responses（含 <code>reasoning_effort</code>），供 Cherry Studio / LobeChat / SDK 使用。
+      <strong>本机直连，不额外开口子</strong><br>
+      定位账号所有者单人使用：不监听任何额外端口、不提供对外接口，模型请求由宿主直连杭电助手网关。
     </td>
   </tr>
 </table>
@@ -78,15 +74,15 @@
    dsh plugin --profile web add dsh-hduhelp-ai
    ```
 
-2. 在 `~/.dsh/profiles/<profile>/cordis.patch.yml` 末尾加一条 loader 入口：
+2. 插件自带 cordis patch（`cordis.patch.yml`），安装时自动注入；需要自定义时编辑 profile 的 `cordis.patch.yml` 里 `hduhelp-ai` 条目：
 
    ```yaml
    - insert:
        - id: hduhelp-ai
          name: 'dsh-hduhelp-ai'
          config:
-           port: 8787
-           apiKey: sk-hduhelp
+           purpose: app.mate.chat
+           dataDir: ''
    ```
 
 3. 打开 DSH 设置 →「杭电助手 AI」，用学号 + 数字杭电密码登录。
@@ -95,42 +91,23 @@
 
 > [!NOTE]
 > 插件的文本用途走 **Responses** 协议（`/openai/v1/responses`），走 chat/completions 会被上游拒绝；
-> 反代那边已经做了翻译，所以普通 OpenAI 客户端不用关心这件事。
+> adapter 直接以 Responses 协议对接上游，不做 chat/completions 转换。
 
 > [!IMPORTANT]
 > 账号密码只用于换取 token，不落盘：`~/.dsh/hduhelp-ai/token.json` 里只有 access/refresh token（0600）。
 > 面板接口要求 `X-DSH-HDUHelp: 1` 头并校验 Host，跨站页面无法静默调用。
-> 反代默认监听 `0.0.0.0:8787`，只建议在内网使用；公网部署请改成 `127.0.0.1` 或加前置鉴权。
-> 本项目只做协议转换与本地反代，请在你的账号额度内使用，并遵守学校与杭电助手的使用规则。
-
-## 反代
-
-| 路由 | 说明 |
-|---|---|
-| `GET  /v1/models` | 上游模型目录 |
-| `POST /v1/chat/completions` | 翻译成 Responses，流式 / 非流式都支持 |
-| `POST /v1/responses` | 原样透传 |
-| `POST /v1/embeddings`、`/v1/images/*`、`/v1/rerank` | 透传 |
-
-```bash
-curl http://127.0.0.1:8787/v1/chat/completions \
-  -H 'Authorization: Bearer sk-hduhelp' \
-  -H 'Content-Type: application/json' \
-  -d '{"model":"deepseek-flash","messages":[{"role":"user","content":"你好"}],"stream":true}'
-```
-
-API Key 默认 `sk-hduhelp`，也可以直接把 `access_token` 当 key 传。
+> 插件不监听任何额外端口、不提供对外接口；模型请求由宿主直连上游，仅供账号所有者本人使用。
+> 本项目只做协议适配与本地模型注册，请在你的账号额度内使用，并遵守学校与杭电助手的使用规则。
 
 ## 配置
 
 | 键 | 默认 | 说明 |
 |---|---|---|
-| `port` | `8787` | 反代端口，`0` 表示不自动启动 |
-| `host` | `0.0.0.0` | 反代监听地址 |
 | `purpose` | `app.mate.chat` | 固定用途，插件只暴露 chat 这一条入口 |
-| `apiKey` | `sk-hduhelp` | 客户端用的 key |
-| `defaultModel` | 空 | 请求没带 model 时补的值 |
 | `dataDir` | `~/.dsh/hduhelp-ai` | token / 勾选集 / 模型缓存目录 |
+| `contextWindow` | `128000` | 上游未提供上下文长度时的兜底值 |
+
+旧版本配置里的 `port` / `host` / `apiKey` / `defaultModel` / `allowPassthrough` 已随反代一起移除，升级后这些键会被忽略，可从 profile 配置里删掉。
 
 ## 工作原理
 

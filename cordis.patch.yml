@@ -1,20 +1,13 @@
 # dsh-hduhelp-ai profile patch — insert one host entry. The browser half
 # (lib/client.js) is picked up by dsh-client-modules through this package's
 # `dsh.client` declaration, so the Settings panel appears without extra wiring.
+#
+# 定位：账号所有者单人使用。插件不监听任何额外端口，模型请求由宿主直连上游。
 - insert:
     - id: hduhelp-ai
       name: 'dsh-hduhelp-ai'
       config:
-        # OpenAI 兼容反代监听端口（0 表示不自动启动，可在面板里手动开）
-        port: 8787
-        host: 0.0.0.0
         # 默认用途：app.mate.chat / app.mate.summary / app.mate.title / app.mate.image
         purpose: app.mate.chat
-        # 客户端拿这个 key 连反代
-        apiKey: sk-hduhelp
-        # 没有 model 时补的默认模型（留空交给上游报错）
-        defaultModel: ''
-        # 允许把 hduhelp access_token 直接当 key 用
-        allowPassthrough: true
-        # token / 配置存放目录，留空 = ~/.dsh/hduhelp-ai
+        # token / 勾选集 / 模型缓存目录，留空 = ~/.dsh/hduhelp-ai
         dataDir: ''
