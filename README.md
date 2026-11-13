@@ -116,6 +116,7 @@
 - **不降级**：工具调用只用结构化 `function_call` / `function_call_output`。历史被压缩导致工具结果配不上对、上游返回 400、SSE 缺终止事件，都如实报错，不退回文本观察协议，也不把截断的响应当成功。
 - **凭证**：有 `expires_at` 时提前 2 分钟主动续期；续期单飞，并发 401 共用同一次请求；上游明确拒绝 refresh_token 即置未登录并清掉该账号的额度/目录缓存，网络抖动则保留凭证等下次重试。登出清 token、额度观测、模型目录与勾选集。
 - **额度**：只统计本插件发出的请求（官方 App 的消耗看不到），面板与胶囊都标注这一点。窗口过了重置时刻只标「待刷新」，不当成 0%；5 小时窗口重置不代表 7 天解限；额度用尽的 429 归类为 `QUOTA`，不进重试。
+- **额度实时更新**：上游没有查询额度的接口，数字只在真有请求时产生。因此额度胶囊改成长轮询（`/__hduhelp/quota/wait`）：一次请求结束后，宿主立刻把新观测推给正在看的页面，实测 30ms 内刷新，不再等 30 秒轮询；20 秒没有新观测就返回 `unchanged` 重新挂起，页面关闭立即回收连接。
 
 ## 工作原理
 
@@ -128,7 +129,13 @@
   → POST /identity/login/exchange {code} → access_token / refresh_token
 ```
 
-额度来自响应头：`x-hduhelp-quota-5h-utilization` / `-5h-reset`、`x-hduhelp-quota-7d-*`，429 时附 `retry-after`。
+额度来自响应头：`x-hduhelp-quota-5h-utilization` / `-5h-reset`、`x-hduhelp-quota-7d-*`，429 时附 `retry-after`。这些头只在推理响应里出现，所以「实时」的边界是「最近一次请求」，不是「此刻账户真实余量」。
+
+## 测试
+
+```bash
+node --test test/
+```
 
 ## 卸载
 
