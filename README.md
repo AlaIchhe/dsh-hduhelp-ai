@@ -33,34 +33,38 @@
   <tr>
     <td width="50%" valign="top">
       <strong>面板登录</strong><br>
-      设置里填学号和统一身份认证密码，走杭电 CAS 换 token。
+      设置里填学号和统一身份认证密码，走杭电 CAS 换 token，纯 HTTP 不需要浏览器；token 过期自动用 refresh_token 续期。
     </td>
     <td width="50%" valign="top">
       <strong>只注册你选的模型</strong><br>
-      上游目录有 77 个模型，插件只把勾选的那几个注册进 DSH 模型列表。
+      上游目录有 77 个模型，插件只把勾选的那几个注册进 DSH 模型列表，选择器保持干净。
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
       <strong>原生多轮工具调用</strong><br>
-      走 Responses 协议的 <code>function_call</code> / <code>function_call_output</code>
+      走 Responses 协议的 <code>function_call</code> / <code>function_call_output</code>，思考—调用—观察的 ReAct 循环不降级。
     </td>
     <td width="50%" valign="top">
-      <strong>额度就在手边</strong><br>
-      输入框工具行、权限按钮右侧显示 5 小时 / 7 天两个窗口的用量；额度用尽时显示恢复倒计时。
+      <strong>可调思考等级</strong><br>
+      按上游 <code>supported_reasoning_levels</code> 暴露档位（低 / 中 / 高 / 更高 / 最大），在模型名旁边用滑杆切换，随请求以 <code>reasoning.effort</code> 下发。
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <strong>OpenAI 兼容反代</strong><br>
-      额外提供 <code>http://&lt;host&gt;:8787/v1</code>，chat/completions 自动翻译成 Responses，供 Cherry Studio / LobeChat / SDK 使用。
+      <strong>额度就在手边</strong><br>
+      输入框工具行、权限按钮右侧显示 5 小时 / 7 天两个窗口的用量；额度用尽时显示恢复倒计时。
     </td>
     <td width="50%" valign="top">
-      <strong>登录态自维护</strong><br>
-      token 过期用 refresh_token 自动续；刷新失败会在面板里留下可读的错误。
+      <strong>OpenAI 兼容反代</strong><br>
+      额外提供 <code>http://&lt;host&gt;:8787/v1</code>，chat/completions 自动翻译成 Responses（含 <code>reasoning_effort</code>），供 Cherry Studio / LobeChat / SDK 使用。
     </td>
   </tr>
 </table>
+
+<p align="center">
+  <img src="docs/screenshot-effort.png" width="300" alt="推理等级">
+</p>
 
 <p align="center">
   <img src="docs/screenshot-quota.png" width="420" alt="额度胶囊">
